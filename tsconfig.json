@@ -24,7 +24,6 @@
     /* custom paths */
     "baseUrl": "src",
     "paths": {
-      "@/*": ["./*"],
       "@components/*": ["components/*"]
     }
   },
