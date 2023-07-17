@@ -1,6 +1,10 @@
-export const MagnifyingGlass = () => {
+import type { HTMLAttributes } from "react";
+export const MagnifyingGlass = ({
+  ...attbs
+}: HTMLAttributes<SVGSVGElement>) => {
   return (
     <svg
+      {...attbs}
       viewBox="0 0 16 16"
       fill="currentColor"
       preserveAspectRatio="none"
