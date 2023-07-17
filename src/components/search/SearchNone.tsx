@@ -9,16 +9,14 @@ export const SearchNone = () => {
       </div>
       <hr />
       <p className="text-xs px-4 font-semibold">추천 검색어로 검색해 보세요</p>
-      <ul className="flex items-center space-x-10 justify-center">
-        {Array(4)
-          .fill(0)
-          .map((_, idx) => (
-            <li key={idx} className="cursor-pointer">
-              <div className="px-4 py-1 bg-[#eef8ff] text-[#007fea] rounded-full">
-                {idx}
-              </div>
-            </li>
-          ))}
+      <ul className="flex items-center space-x-2 justify-start px-3">
+        {["담낭", "아토피 피부염", "저혈압", "감염", "세균"].map((item) => (
+          <li key={item} className="cursor-pointer">
+            <div className="px-4 py-1 bg-[#eef8ff] text-[#007fea] rounded-full">
+              {item}
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   );
