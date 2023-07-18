@@ -2,15 +2,16 @@ import { SearchListWrapper } from "@components/search";
 import SearchButton from "@components/search/SearchButton";
 import SearchInput from "@components/search/SearchInput";
 import { SearchNone } from "@components/search/SearchNone";
-import { mockData } from "mocking/mock";
+import { useSearchContext } from "@contexts/search";
+import useSickSearch from "@hooks/useSickSearch";
 import { useState } from "react";
 import { cls } from "utils";
 
-const MOCK_DATA = mockData.sick;
-
 export const Search = () => {
   const [isFocus, setIsFocus] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
+  const { searchValue } = useSearchContext();
+  const { state, loading } = useSickSearch();
+
   return (
     <form
       className={cls(
@@ -22,7 +23,6 @@ export const Search = () => {
         isFocus={isFocus || !!searchValue}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
-        onChange={(e) => setSearchValue(e.target.value)}
       />
       <div className="pr-2">
         <SearchButton />
@@ -34,7 +34,11 @@ export const Search = () => {
             "absolute mx-auto bg-white top-20 left-0 right-0 rounded-3xl shadow-lg"
           )}>
           {searchValue ? (
-            <SearchListWrapper sickList={MOCK_DATA} searchValue={searchValue} />
+            <SearchListWrapper
+              sickList={state?.response}
+              searchValue={searchValue}
+              isLoading={loading}
+            />
           ) : (
             <SearchNone />
           )}

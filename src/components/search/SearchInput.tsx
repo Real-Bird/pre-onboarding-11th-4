@@ -1,14 +1,14 @@
 import { MagnifyingGlass } from "@components/assets";
 import { Input } from "@components/commons";
+import { useSearchContext } from "@contexts/search";
 import { ChangeEvent, useRef } from "react";
 
-const SearchInput = ({
-  isFocus,
-  onFocus,
-  onBlur,
-  onChange,
-}: SearchInputProps) => {
+const SearchInput = ({ isFocus, onFocus, onBlur }: SearchInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const { searchValue, setSearchValue } = useSearchContext();
+
+  const handleSearchValueChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setSearchValue(e.target.value);
   return (
     <div
       className="relative flex items-center p-5 w-full flex-1"
@@ -24,7 +24,8 @@ const SearchInput = ({
         className="w-full outline-none"
         onFocus={onFocus}
         onBlur={onBlur}
-        onChange={onChange}
+        onChange={handleSearchValueChange}
+        value={searchValue}
       />
     </div>
   );
@@ -36,5 +37,4 @@ interface SearchInputProps {
   isFocus: boolean;
   onFocus: () => void;
   onBlur: () => void;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }

@@ -1,22 +1,25 @@
 import { SearchListItem } from "@components/search/SearchListItem";
+import { SickListData } from "sick";
 
 export const SearchListWrapper = ({
   searchValue,
   sickList,
+  isLoading,
 }: SearchListProps) => {
-  const filteredList = sickList.filter((sick) =>
+  const filteredList = sickList?.filter((sick) =>
     sick.sickNm.includes(searchValue)
   );
+
   return (
     <ul className="space-y-1 w-full py-6">
       <li key="sickNm" className="font-bold">
         <SearchListItem sickNm={searchValue} />
       </li>
-      {filteredList.length !== 0 && (
+      {filteredList?.length !== 0 && (
         <span className="text-xs font-semibold px-4">추천 검색어</span>
       )}
       {filteredList
-        .sort((a, b) => a.sickNm.length - b.sickNm.length)
+        ?.sort((a, b) => a.sickNm.length - b.sickNm.length)
         .slice(0, 7)
         .map((sick) => {
           const sickName = sick.sickNm.replace(
@@ -25,7 +28,11 @@ export const SearchListWrapper = ({
           );
           return (
             <li key={sick.sickCd}>
-              <SearchListItem sickNm={sickName} />
+              {isLoading ? (
+                <span>검색 중</span>
+              ) : (
+                <SearchListItem sickNm={sickName} />
+              )}
             </li>
           );
         })}
@@ -33,12 +40,8 @@ export const SearchListWrapper = ({
   );
 };
 
-type SickData = {
-  sickCd: string;
-  sickNm: string;
-};
-
 interface SearchListProps {
   searchValue: string;
-  sickList: SickData[];
+  sickList: SickListData | undefined;
+  isLoading: boolean;
 }
