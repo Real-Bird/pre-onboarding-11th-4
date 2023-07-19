@@ -1,5 +1,6 @@
 import { useSearchContext } from "@contexts/search";
 import { useSickListContext } from "@contexts/sickList";
+import useDebounce from "@hooks/useDebounce";
 import { GetSickListResponseType } from "@instances/SickListInstance";
 import { useEffect, useState } from "react";
 
@@ -11,6 +12,7 @@ export default function useSickSearch() {
     loading: false,
     error: null,
   });
+  const debounce = useDebounce();
 
   useEffect(() => {
     const refetchSickList = async () => {
@@ -37,8 +39,8 @@ export default function useSickSearch() {
         setFetchState((prev) => ({ ...prev, loading: false }));
       }
     };
-    refetchSickList();
-  }, [getSickList, searchValue]);
+    debounce(() => refetchSickList(), 1000);
+  }, [searchValue]);
 
   return {
     state: fetchState.state,

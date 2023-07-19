@@ -15,7 +15,7 @@ module.exports = {
     project: true,
     tsconfigRootDir: __dirname,
   },
-  plugins: ["unused-imports", "@typescript-eslint"],
+  plugins: ["unused-imports", "@typescript-eslint", "react-hooks"],
   rules: {
     "@typescript-eslint/no-non-null-assertion": "off",
     "no-var": "error",
@@ -24,6 +24,7 @@ module.exports = {
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": "error",
     "@typescript-eslint/no-unused-vars": "off",
+    "react-hooks/exhaustive-deps": "off",
   },
   ignorePatterns: ["*.config.js", "*.config.ts", "*.cjs"],
 };
