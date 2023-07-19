@@ -1,7 +1,7 @@
 import {
   GetSickListResponseType,
-  SickListInstance,
-} from "@instances/SickListInstance";
+  SickListService,
+} from "@instances/SickListService";
 import { ReactNode, createContext, useContext } from "react";
 
 const SickListContext = createContext<SickListContextType>({
@@ -11,9 +11,9 @@ export const useSickListContext = () => useContext(SickListContext);
 
 const SickListProvider = ({
   children,
-  sickListInstance,
+  sickListService,
 }: SickListProviderProps) => {
-  const getSickList = sickListInstance.getSickList.bind(sickListInstance);
+  const getSickList = sickListService.getSickList.bind(sickListService);
   return (
     <SickListContext.Provider value={{ getSickList }}>
       {children}
@@ -23,7 +23,7 @@ const SickListProvider = ({
 
 interface SickListProviderProps {
   children: ReactNode;
-  sickListInstance: SickListInstance;
+  sickListService: SickListService;
 }
 
 interface SickListContextType {

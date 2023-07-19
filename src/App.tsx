@@ -5,8 +5,14 @@ import {
 } from "@components/assets";
 import { Layout } from "@components/commons";
 import { Search } from "@components/search";
+import { useCacheContext } from "@contexts/cache";
+import { useEffect } from "react";
 
 function App() {
+  const { removeExpiryCaches } = useCacheContext();
+  useEffect(() => {
+    removeExpiryCaches();
+  }, []);
   return (
     <Layout>
       <header className="w-full text-center text-4xl font-extrabold">

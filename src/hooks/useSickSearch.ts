@@ -1,7 +1,8 @@
+import { useCacheContext } from "@contexts/cache";
 import { useSearchContext } from "@contexts/search";
 import { useSickListContext } from "@contexts/sickList";
 import useDebounce from "@hooks/useDebounce";
-import { GetSickListResponseType } from "@instances/SickListInstance";
+import { GetSickListResponseType } from "@instances/SickListService";
 import { useEffect, useState } from "react";
 
 export default function useSickSearch() {
@@ -13,22 +14,34 @@ export default function useSickSearch() {
     error: null,
   });
   const debounce = useDebounce();
+  const { getCache, isCacheValid, setCache } = useCacheContext();
 
   useEffect(() => {
     const refetchSickList = async () => {
       if (!searchValue) {
         return;
       }
-      try {
+      setFetchState((prev) => ({
+        ...prev,
+        loading: true,
+      }));
+
+      if (isCacheValid(searchValue)) {
+        const cacheResponse = getCache(searchValue);
         setFetchState((prev) => ({
           ...prev,
-          isLoading: true,
+          state: cacheResponse.fetchState,
+          loading: false,
         }));
+        return;
+      }
+      try {
         const response = await getSickList(searchValue);
         setFetchState((prev) => ({
           ...prev,
           state: response,
         }));
+        setCache(searchValue, response!);
       } catch (e) {
         const err = e as Error;
         setFetchState((prev) => ({
