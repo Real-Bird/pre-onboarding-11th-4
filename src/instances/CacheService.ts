@@ -3,6 +3,7 @@ import { LocalStorage } from "@instances/LocalStorage";
 export class CacheService {
   protected localStorage;
   private readonly EXPIRY_MINUTES = 1000 * 60;
+  public readonly RECENTLY_SEARCHES = "recently_searches";
   constructor(localStorage: LocalStorage) {
     this.localStorage = localStorage;
   }
@@ -11,10 +12,10 @@ export class CacheService {
     return JSON.parse(this.localStorage.get(searchValue));
   }
 
-  set<T>(searchValue: string, fetchState: T) {
+  set<T>(searchValue: string, fetchState: T, expiryTime?: number) {
     this.localStorage.save(searchValue, {
       fetchState,
-      saved_at: new Date().getTime() + this.EXPIRY_MINUTES,
+      saved_at: new Date().getTime() + (expiryTime || this.EXPIRY_MINUTES),
     });
   }
 

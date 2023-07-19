@@ -3,6 +3,7 @@ import SearchButton from "@components/search/SearchButton";
 import SearchInput from "@components/search/SearchInput";
 import { SearchNone } from "@components/search/SearchNone";
 import { useSearchContext } from "@contexts/search";
+import useMoveListKeyDown from "@hooks/useMoveListKeyDown";
 import useSickSearch from "@hooks/useSickSearch";
 import { useState } from "react";
 import { cls } from "utils";
@@ -11,14 +12,24 @@ export const Search = () => {
   const [isFocus, setIsFocus] = useState(false);
   const { searchValue } = useSearchContext();
   const { state, loading } = useSickSearch();
+  const filteredList = state?.response?.filter((sick) =>
+    sick.sickNm.includes(searchValue)
+  );
+
+  const { formRef, onKeyDown } = useMoveListKeyDown(
+    filteredList?.length || -1,
+    !isFocus
+  );
 
   return (
     <form
+      ref={formRef}
       className={cls(
         isFocus ? "ring-[#007BE9] ring-2" : "",
         "w-full relative mx-auto flex bg-white max-w-lg rounded-full items-center justify-between"
       )}
-      onSubmit={(e) => e.preventDefault()}>
+      onSubmit={(e) => e.preventDefault()}
+      onKeyDown={onKeyDown}>
       <SearchInput
         isFocus={isFocus || !!searchValue}
         onFocus={() => setIsFocus(true)}
