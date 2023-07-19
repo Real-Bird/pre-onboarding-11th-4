@@ -24,8 +24,10 @@
     /* custom paths */
     "baseUrl": "src",
     "paths": {
-      "@/*": ["./*"],
-      "@components/*": ["components/*"]
+      "@components/*": ["components/*"],
+      "@instances/*": ["instances/*"],
+      "@contexts/*": ["contexts/*"],
+      "@hooks/*": ["hooks/*"]
     }
   },
   "include": ["src"],
