@@ -6,19 +6,15 @@ export const SearchListWrapper = ({
   sickList,
   isLoading,
 }: SearchListProps) => {
-  const filteredList = sickList?.filter((sick) =>
-    sick.sickNm.includes(searchValue)
-  );
-
   return (
     <ul className="space-y-1 w-full py-6">
       <li key="sickNm" className="font-bold">
         <SearchListItem sickNm={searchValue} />
       </li>
-      {filteredList?.length !== 0 && (
+      {sickList?.length !== 0 && (
         <span className="text-xs font-semibold px-4">추천 검색어</span>
       )}
-      {filteredList
+      {sickList
         ?.sort((a, b) => a.sickNm.length - b.sickNm.length)
         .slice(0, 7)
         .map((sick) => {

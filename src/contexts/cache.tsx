@@ -17,7 +17,12 @@ const CacheProvider = ({ children, cacheService }: CacheProviderProps) => {
   const removeExpiryCaches = cacheService.removeExpiryCaches.bind(cacheService);
   return (
     <CacheContext.Provider
-      value={{ getCache, setCache, isCacheValid, removeExpiryCaches }}>
+      value={{
+        getCache,
+        setCache,
+        isCacheValid,
+        removeExpiryCaches,
+      }}>
       {children}
     </CacheContext.Provider>
   );
