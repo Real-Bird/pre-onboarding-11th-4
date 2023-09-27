@@ -11,7 +11,9 @@
     "postinstall": "husky install",
     "format": "prettier --write --cache .",
     "lint": "eslint --cache .",
-    "server": "json-server --watch db.json --port 4000"
+    "server": "json-server --watch db.json --port 4000",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "npm run format"
@@ -21,6 +23,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/gh-pages": "^3.2.2",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
@@ -32,6 +35,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.1",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "gh-pages": "^6.0.0",
     "husky": "^8.0.3",
     "json-server": "^0.17.3",
     "lint-staged": "^13.2.3",
@@ -41,5 +45,6 @@
     "typescript": "^5.0.2",
     "vite": "^4.4.0",
     "vite-tsconfig-paths": "^4.2.0"
-  }
+  },
+  "homepage": "https://Real-Bird.github.io/pre-onboarding-11th-4"
 }
