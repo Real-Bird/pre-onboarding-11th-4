@@ -18,17 +18,9 @@
 
 [00-assignments-conclusion.webm](https://github.com/Real-Bird/pre-onboarding-11th-4/assets/83404864/62ededfe-f220-47c8-ba18-761f47edcc80)
 
-## 2. 설치 및 실행
+## 2. 데모 링크
 
-```shell
-npm install
-
-# run server
-npm run server
-
-# run client
-npm start
-```
+<https://real-bird.github.io/pre-onboarding-11th-4/>
 
 ## 3. Assignments
 
