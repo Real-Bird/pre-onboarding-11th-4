@@ -25,7 +25,3 @@ dist-ssr
 
 # eslint cache
 .eslintcache
-
-# mocking data
-
-src/mocking

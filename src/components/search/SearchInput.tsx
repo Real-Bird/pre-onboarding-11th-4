@@ -1,14 +1,27 @@
 import { MagnifyingGlass } from "@components/assets";
 import { Input } from "@components/commons";
 import { useSearchContext } from "@contexts/search";
-import { ChangeEvent, useRef } from "react";
+import { ChangeEvent, KeyboardEvent, RefObject, useCallback } from "react";
 
-const SearchInput = ({ isFocus, onFocus, onBlur }: SearchInputProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+const preventArrowKey = ["ArrowUp", "ArrowDown"];
+
+const SearchInput = ({
+  isFocus,
+  onFocus,
+  onBlur,
+  inputRef,
+}: SearchInputProps) => {
   const { searchValue, setSearchValue } = useSearchContext();
 
-  const handleSearchValueChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setSearchValue(e.target.value);
+  const handleSearchValueChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value),
+    []
+  );
+  const handlePreventInputArrowKey = useCallback((e: KeyboardEvent) => {
+    if (preventArrowKey.includes(e.code)) {
+      e.preventDefault();
+    }
+  }, []);
   return (
     <div
       className="relative flex items-center p-5 w-full flex-1"
@@ -26,6 +39,7 @@ const SearchInput = ({ isFocus, onFocus, onBlur }: SearchInputProps) => {
         onBlur={onBlur}
         onChange={handleSearchValueChange}
         value={searchValue}
+        onKeyDown={handlePreventInputArrowKey}
       />
     </div>
   );
@@ -37,4 +51,5 @@ interface SearchInputProps {
   isFocus: boolean;
   onFocus: () => void;
   onBlur: () => void;
+  inputRef: RefObject<HTMLInputElement>;
 }

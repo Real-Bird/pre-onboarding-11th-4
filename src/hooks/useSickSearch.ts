@@ -17,15 +17,14 @@ export default function useSickSearch() {
   const { getCache, isCacheValid, setCache } = useCacheContext();
 
   useEffect(() => {
+    if (searchValue) {
+      setFetchState((prev) => ({ ...prev, loading: true }));
+    }
     const refetchSickList = async () => {
       if (!searchValue) {
+        setFetchState((prev) => ({ ...prev, loading: false }));
         return;
       }
-      setFetchState((prev) => ({
-        ...prev,
-        loading: true,
-      }));
-
       if (isCacheValid(searchValue)) {
         const cacheResponse = getCache(searchValue);
         setFetchState((prev) => ({
@@ -41,7 +40,9 @@ export default function useSickSearch() {
           ...prev,
           state: response,
         }));
-        setCache(searchValue, response!);
+        if (response && response.response.length > 0) {
+          setCache(searchValue, response);
+        }
       } catch (e) {
         const err = e as Error;
         setFetchState((prev) => ({
@@ -52,7 +53,7 @@ export default function useSickSearch() {
         setFetchState((prev) => ({ ...prev, loading: false }));
       }
     };
-    debounce(() => refetchSickList(), 1000);
+    debounce(refetchSickList, 1000);
   }, [searchValue]);
 
   return {
