@@ -11,6 +11,7 @@ export class SickListService {
   }
 
   async getSickList(query: string): Promise<GetSickListResponseType> {
+    this.httpClient;
     this.callingCnt = this.callingCnt + 1;
     try {
       // const response: SickListData = await (

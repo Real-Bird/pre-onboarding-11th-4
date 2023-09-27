@@ -26,5 +26,5 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": "off",
     "react-hooks/exhaustive-deps": "off",
   },
-  ignorePatterns: ["*.config.js", "*.config.ts", "*.cjs"],
+  ignorePatterns: ["*.config.js", "*.config.ts", "*.cjs", "/dist/"],
 };
